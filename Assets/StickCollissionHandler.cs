@@ -21,7 +21,10 @@ public class StickCollissionHandler : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        
+        if(collision.collider.gameObject.CompareTag("IgnoreCollide")){
+            Debug.Log("ignoring collide");
+            return;
+        }
 
         //assuming a single contact point
         Vector3 localPosition = transform.InverseTransformPoint(collision.contacts[0].point);
@@ -42,7 +45,7 @@ public class StickCollissionHandler : MonoBehaviour
 
             
             //derive the boost factor from the local colission position
-            float boostFactorl = localPosition[0];
+            float boostFactorl =  boostFactorl = Mathf.Abs(localPosition[0]);
             collision.collider.GetComponent<BallBooster>().Boost(boostFactorl);
         }
         else
